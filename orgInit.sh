@@ -5,3 +5,5 @@ sfdx force:source:push -u IssueBoxScratchOrg
 sfdx force:user:permset:assign -n  IssueBox_Admin
 
 sfdx force:org:open -u IssueBoxScratchOrg
+
+#sfdx force:lightning:lwc:start 
