@@ -12,8 +12,10 @@
                     <lightning-input-field field-name={priorityField}></lightning-input-field>
                     <lightning-input-field field-name={statusField}></lightning-input-field>
                     <lightning-input-field field-name={typeField}></lightning-input-field>
-                    <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
-                    <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
+                    <template if:true={objectApiName}>
+                        <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
+                        <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
+                    </template>
                     <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
                 </div>
                 <div class="slds-col slds-size_2-of-3">
