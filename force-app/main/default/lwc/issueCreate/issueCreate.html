@@ -1,6 +1,6 @@
 <template>
     <lightning-card title="Create Issue">
-        <lightning-record-edit-form object-api-name={issueObject} onsuccess={handleCreated} onerror={handleError}>
+        <lightning-record-edit-form object-api-name={issueObject} onsuccess={handleCreated} onerror={handleError} onsubmit={handleSubmit}>
             <lightning-messages></lightning-messages>
             <div class="slds-grid">
                 <div class="slds-col slds-size_3-of-3">
@@ -14,6 +14,7 @@
                     <lightning-input-field field-name={typeField}></lightning-input-field>
                     <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
                     <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
+                    <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
                 </div>
                 <div class="slds-col slds-size_2-of-3">
                     <lightning-input-field field-name={emailNotificationField}></lightning-input-field>

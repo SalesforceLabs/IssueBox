@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>Reported_Record__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

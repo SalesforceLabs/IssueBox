@@ -1,6 +1,8 @@
-import { LightningElement,api, track } from 'lwc';
+import { LightningElement,wire, api, track } from 'lwc';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { CurrentPageReference } from 'lightning/navigation';
+
 
 import ISSUE_OBJECT from '@salesforce/schema/Issue__c';
 import ActualResult_FIELD from '@salesforce/schema/Issue__c.Actual_Result__c';
@@ -13,6 +15,7 @@ import ReportedRecord_FIELD from '@salesforce/schema/Issue__c.Reported_Record__c
 import ReproSteps_FIELD from '@salesforce/schema/Issue__c.Repro_Steps__c';
 import Status_FIELD from '@salesforce/schema/Issue__c.Status__c';
 import Type_FIELD from '@salesforce/schema/Issue__c.Type__c';
+import URL_FIELD from '@salesforce/schema/Issue__c.URL__c';
 /* eslint-disable no-console */
 
 /**
@@ -23,6 +26,7 @@ export default class ItemCreate extends LightningElement {
     @api recordId;
 
     @track recordCreated = false;
+    @track pageUrlPath = window.location.pathname;
 
     issueObject = ISSUE_OBJECT;
     actualResultField = ActualResult_FIELD;
@@ -33,9 +37,25 @@ export default class ItemCreate extends LightningElement {
     reproStepsField = ReproSteps_FIELD;
     statusField = Status_FIELD;
     typeField = Type_FIELD;
+    urlField = URL_FIELD;
     reportedObjectField = ReportedObject_FIELD;
     reportedRecordField = ReportedRecord_FIELD;
 
+    @wire(CurrentPageReference)
+    pageRef;
+    
+    connectedCallback(){
+        console.log('this.pageRef', this.pageRef); 
+    }
+
+    handleSubmit(event){
+        event.preventDefault();       // stop the form from submitting
+        const fields = event.detail.fields;
+        //Get Latest Path Name
+        fields.URL__c = this.pageUrlPath = window.location.pathname;
+        
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }
 
    handleResetFields(){
         //Only reset fields which do no have "doNotReset" class assigned
