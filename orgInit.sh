@@ -1,4 +1,4 @@
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s
+sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrgTEST -s
 
 sfdx force:source:push -u IssueBoxScratchOrg
 
