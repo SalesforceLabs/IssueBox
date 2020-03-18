@@ -1,0 +1,10 @@
+[
+    {
+        "sobject": "Issue__c",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": [
+            "issuebox-Issue__cs.json"
+        ]
+    }
+]

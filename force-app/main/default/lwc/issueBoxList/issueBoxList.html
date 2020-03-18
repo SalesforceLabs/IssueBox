@@ -1,35 +1,17 @@
 <template>
     
-    <div style="height: 300px;">
-        <template if:true={issueList.length}>
-            <lightning-datatable
-                    key-field="id"
-                    data={issueList}
-                    columns={columns}
-                    onrowselection={getSelectedId}
-                    hide-checkbox-column
-                    >
-            </lightning-datatable>
-        </template>
-    </div> 
-
-<!--
-    <lightning-card title="WireListView" icon-name="custom:custom67">
-
-        <template if:true={listView.data}>
-            <div class="slds-m-around_medium">
-                <template for:each={issues} for:item="issue">
-                    <p key={issue.Id}>
-                        {issue.fields.Details__c.value}
-
-                    </p>
-                </template>
-            </div>
-        </template>
-        <template if:true={listView.error}>
-            Error {listView.error}>
-        </template>
-
+    <lightning-card title="List Issues">
+        <div style="height: 300px;">
+            <template if:true={issueList.length}>
+                <lightning-datatable
+                        key-field="id"
+                        data={issueList}
+                        columns={columns}
+                        onrowselection={getSelectedId}
+                        hide-checkbox-column
+                        >
+                </lightning-datatable>
+            </template>
+        </div> 
     </lightning-card>
--->
 </template>
