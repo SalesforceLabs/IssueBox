@@ -13,7 +13,8 @@
             "Reported_Object__c": "",
             "Reported_Record__c": "",
             "Status__c": "New",
-            "Type__c": "Bug"
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
         },
         {
             "attributes": {
@@ -28,7 +29,8 @@
             "Reported_Object__c": "",
             "Reported_Record__c": "",
             "Status__c": "New",
-            "Type__c": "Bug"
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
         },
         {
             "attributes": {
@@ -43,7 +45,8 @@
             "Reported_Object__c": "Account",
             "Reported_Record__c": "001",
             "Status__c": "New",
-            "Type__c": "Bug"
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
         }
     ]
 }
