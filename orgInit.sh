@@ -1,12 +1,12 @@
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrgTEST -s
+sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s
 
-sfdx force:source:push -u IssueBoxScratchOrg
+sfdx force:source:push
 
 sfdx force:user:permset:assign -n  IssueBox_Admin
 
 sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json
 
-sfdx force:org:open -u IssueBoxScratchOrg
+sfdx force:org:open
 
 #sfdx force:lightning:lwc:start 
 
