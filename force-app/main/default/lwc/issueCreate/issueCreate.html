@@ -1,32 +1,47 @@
 <template>
     <lightning-card title="Create Issue">
-        <lightning-record-edit-form object-api-name={issueObject} onsuccess={handleCreated} onerror={handleError} onsubmit={handleSubmit}>
-            <lightning-messages></lightning-messages>
-            <div class="slds-grid">
-                <div class="slds-col slds-size_3-of-3">
-                    <lightning-input-field field-name={detailsField} class="focusField" aria-placeholder="For example: Error occured when I tried to save change to Email field"></lightning-input-field>
+        <template if:true={showUploadFileDialog}>
+            <lightning-file-upload
+                label="Attach screenshot"
+                name="fileUploader"
+                accept={acceptedFormats}
+                record-id={newIssueRecordId}
+                onuploadfinished={handleUploadFinished}
+                >
+            </lightning-file-upload>
+        </template>
+        <template if:false={showUploadFileDialog}>
+            <lightning-record-edit-form object-api-name={issueObject} onsuccess={handleCreated} onerror={handleError} onsubmit={handleSubmit}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_3-of-3">
+                        <lightning-input-field field-name={detailsField} class="focusField" aria-placeholder="For example: Error occured when I tried to save change to Email field"></lightning-input-field>
+                    </div>
                 </div>
-            </div>
-            <div class="slds-grid">
-                <div class="slds-col slds-size_1-of-3">
-                    <lightning-input-field field-name={priorityField}></lightning-input-field>
-                    <lightning-input-field field-name={statusField}></lightning-input-field>
-                    <lightning-input-field field-name={typeField}></lightning-input-field>
-                    <template if:true={objectApiName}>
-                        <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
-                        <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
-                    </template>
-                    <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field field-name={priorityField}></lightning-input-field>
+                        <lightning-input-field field-name={statusField}></lightning-input-field>
+                        <lightning-input-field field-name={typeField}></lightning-input-field>
+                        <template if:true={objectApiName}>
+                            <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
+                            <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
+                        </template>
+                        <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input-field field-name={emailNotificationField}></lightning-input-field>
+                        <lightning-input-field field-name={reproStepsField}></lightning-input-field>
+                        <lightning-input-field field-name={expectedResultField}></lightning-input-field>
+                        <lightning-input-field field-name={actualResultField}></lightning-input-field>
+                    </div>
                 </div>
-                <div class="slds-col slds-size_2-of-3">
-                    <lightning-input-field field-name={emailNotificationField}></lightning-input-field>
-                    <lightning-input-field field-name={reproStepsField}></lightning-input-field>
-                    <lightning-input-field field-name={expectedResultField}></lightning-input-field>
-                    <lightning-input-field field-name={actualResultField}></lightning-input-field>
-                </div>
-            </div>
-            <lightning-button type="submit" variant="brand" label="Create Issue"></lightning-button>
-            <lightning-button type="submit" variant="brand" label="Reset" onclick={handleResetFields}></lightning-button>
-        </lightning-record-edit-form>
+                <lightning-button-group>
+                    <lightning-button type="submit" variant="brand" label="Create Issue" value="CreateIssue"></lightning-button>
+                    <lightning-button type="submit" variant="brand" label="Create Issue and Upload Screenshot" value="CreateIssueUploadFile" onclick={handleSubmitAndUploadFileButton}></lightning-button>
+                    <lightning-button type="submit" variant="brand" label="Reset" onclick={handleResetFields}></lightning-button>
+                </lightning-button-group>
+            </lightning-record-edit-form>
+        </template>
     </lightning-card>
 </template>

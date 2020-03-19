@@ -27,6 +27,9 @@ export default class ItemCreate extends LightningElement {
 
     @track recordCreated = false;
     @track pageUrlPath = window.location.pathname;
+    @track showUploadFileDialog = false;
+    @track newIssueRecordId;
+    fileUploadButtonClicked = false;
 
     issueObject = ISSUE_OBJECT;
     actualResultField = ActualResult_FIELD;
@@ -43,11 +46,11 @@ export default class ItemCreate extends LightningElement {
 
     @wire(CurrentPageReference)
     pageRef;
-    
-    connectedCallback(){
-        console.log('this.pageRef', this.pageRef); 
-    }
 
+    get acceptedFormats() {
+        return ['.png', '.jpg', '.jpeg'];
+    }
+    
     handleSubmit(event){
         event.preventDefault();       // stop the form from submitting
         const fields = event.detail.fields;
@@ -55,6 +58,12 @@ export default class ItemCreate extends LightningElement {
         fields.URL__c = this.pageUrlPath = window.location.pathname;
         
         this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }
+    handleSubmitAndUploadFileButton(event){
+        //Do not use event.preventDefault()
+        //We want default form submit handler to run after this'
+        //All we needed here was to set the flag to show file dialog after record create
+        this.fileUploadButtonClicked = true;
     }
 
    handleResetFields(){
@@ -69,6 +78,10 @@ export default class ItemCreate extends LightningElement {
     }
 
     handleCreated(event) {
+        if(this.fileUploadButtonClicked){
+            this.showUploadFileDialog = true;
+        }
+        this.newIssueRecordId = event.detail.id;
         //Reset the form so we can enter more data for next issue; if needed
         this.handleResetFields();
         this.dispatchEvent(
@@ -82,6 +95,20 @@ export default class ItemCreate extends LightningElement {
             new CustomEvent('issuecreated', { detail: event.detail.id })
         );
 
+    }
+    handleUploadFinished(event) {
+        // Get the list of uploaded files
+        const uploadedFiles = event.detail.files;
+        if(event.detail.files.length > 0){
+            this.showUploadFileDialog = false;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'File was successfully uploaded and attached to the issue',
+                    variant: 'success'
+                })
+            );
+        }
     }
 
     handleError(event) {
