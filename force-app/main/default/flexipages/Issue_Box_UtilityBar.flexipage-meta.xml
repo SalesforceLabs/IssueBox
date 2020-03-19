@@ -65,7 +65,7 @@
                 <type>decorator</type>
                 <value>800</value>
             </componentInstanceProperties>
-            <componentName>issueBoxList</componentName>
+            <componentName>issueList</componentName>
         </componentInstances>
         <componentInstances>
             <componentName>console:history</componentName>

@@ -1,0 +1,21 @@
+<template>  
+    <lightning-card title="Issue List" icon-name="custom:custom63"> 
+        <div class="slds-m-around_medium">  
+            <c-paginator onprevious={handlePrevious} onnext={handleNext} onfirst={handleFirst}  
+              onlast={handleLast} currentpage={currentpage} totalrecords={totalrecords} pagesize={pagesize} totalpages={totalpages}>   
+            </c-paginator>  
+          </div>  
+        <lightning-button label="Get Latest" onclick={getIssuesCount}></lightning-button>  
+        <template if:true={issues.length}>
+            <lightning-datatable
+                    key-field="id"
+                    data={issues}
+                    columns={columns}
+                    hide-checkbox-column
+                    >
+            </lightning-datatable>
+        </template>
+      
+        
+    </lightning-card>  
+  </template>  
