@@ -6,34 +6,57 @@
                 name="fileUploader"
                 accept={acceptedFormats}
                 record-id={newIssueRecordId}
-                onuploadfinished={handleUploadFinished}
-                >
+                onuploadfinished={handleUploadFinished}>
             </lightning-file-upload>
+            <lightning-button label="Cancel File Upload" onclick={handelCancelFileUploadButton}></lightning-button>
         </template>
         <template if:false={showUploadFileDialog}>
             <lightning-record-edit-form object-api-name={issueObject} onsuccess={handleCreated} onerror={handleError} onsubmit={handleSubmit}>
                 <lightning-messages></lightning-messages>
-                <div class="slds-grid">
+                <div class="slds-form-element__row">
                     <div class="slds-col slds-size_3-of-3">
                         <lightning-input-field field-name={detailsField} class="focusField" aria-placeholder="For example: Error occured when I tried to save change to Email field"></lightning-input-field>
                     </div>
                 </div>
-                <div class="slds-grid">
+                <div class="slds-form-element__row slds-form__item">
                     <div class="slds-col slds-size_1-of-3">
                         <lightning-input-field field-name={priorityField}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
                         <lightning-input-field field-name={statusField}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
                         <lightning-input-field field-name={typeField}></lightning-input-field>
-                        <template if:true={objectApiName}>
-                            <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
-                            <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
-                        </template>
-                        <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
+                    </div>
+                </div>
+
+                <div class="slds-form-element__row slds-form__item">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input-field field-name={emailNotificationField}></lightning-input-field>
                     </div>
                     <div class="slds-col slds-size_2-of-3">
-                        <lightning-input-field field-name={emailNotificationField}></lightning-input-field>
                         <lightning-input-field field-name={reproStepsField}></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-form-element__row slds-form__item">
+                    <div class="slds-col slds-size_3-of-3">
                         <lightning-input-field field-name={expectedResultField}></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-form-element__row slds-form__item">
+                    <div class="slds-col slds-size_3-of-3">
                         <lightning-input-field field-name={actualResultField}></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-form-element__row slds-form__item">
+                    <template if:true={objectApiName}>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled={objectApiName} class="doNotReset"></lightning-input-field>
+                            <lightning-input-field field-name={reportedRecordField} value={recordId} disabled={recordId} class="doNotReset"></lightning-input-field>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
                     </div>
                 </div>
                 <lightning-button-group>

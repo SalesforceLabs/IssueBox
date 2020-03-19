@@ -111,6 +111,10 @@ export default class ItemCreate extends LightningElement {
         }
     }
 
+    handelCancelFileUploadButton(event){
+        this.showUploadFileDialog = false;
+    }
+
     handleError(event) {
         this.dispatchEvent(
             new ShowToastEvent({
