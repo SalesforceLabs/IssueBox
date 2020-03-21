@@ -20,7 +20,7 @@
             <componentInstanceProperties>
                 <name>label</name>
                 <type>decorator</type>
-                <value>Create Issue</value>
+                <value>Log Issue</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>scrollable</name>

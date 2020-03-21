@@ -26,7 +26,6 @@ const PAGE_SIZE = 10;
     @track totalrecords;
     localCurrentPage = this.currentpage;
 
-
     @wire(getIssueList, { pageNumber: '$currentpage', pageSize: '$pagesize', totalRecords: '$totalrecords' })
     wiredIssueList(value) {
         this.wiredIssueListPointer = value; 

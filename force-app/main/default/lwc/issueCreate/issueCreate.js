@@ -29,7 +29,8 @@ export default class ItemCreate extends LightningElement {
     @track pageUrlPath = window.location.pathname;
     @track showUploadFileDialog = false;
     @track newIssueRecordId;
-    fileUploadButtonClicked = false;
+
+    @track fileUploadButtonClicked = false;
 
     issueObject = ISSUE_OBJECT;
     actualResultField = ActualResult_FIELD;
@@ -46,16 +47,39 @@ export default class ItemCreate extends LightningElement {
 
     @wire(CurrentPageReference)
     pageRef;
+    
+    
+    connectedCallback(){
+        this.updateRecordInfoFromUrl();
+    };
 
     get acceptedFormats() {
         return ['.png', '.jpg', '.jpeg'];
     }
-    
+
+    updateRecordInfoFromUrl(){
+        if(typeof(this.pageRef) !== 'undefined' && typeof(this.pageRef.attributes) !== 'undefined'){
+            if(typeof(this.pageRef.attributes.objectApiName) !== 'undefined'){
+                this.objectApiName = this.pageRef.attributes.objectApiName;
+            }
+            if(typeof(this.pageRef.attributes.recordId) !== 'undefined'){
+                this.recordId = this.pageRef.attributes.recordId;
+            }
+        }
+        this.pageUrlPath = window.location.pathname;
+    }
     handleSubmit(event){
         event.preventDefault();       // stop the form from submitting
         const fields = event.detail.fields;
+
+        //Update RecordId, ObjectAPIName based on URL in case URL has changed in console
+        //There is no way to track URL changes as there is no API and component doesn't re-render in Utility Bar
+        //Update field data with new values before submitting form
+        this.updateRecordInfoFromUrl();
+        fields.Reported_Object__c = this.objectApiName;
+        fields.Reported_Record__c = this.recordId;
         //Get Latest Path Name
-        fields.URL__c = this.pageUrlPath = window.location.pathname;
+        fields.URL__c = this.pageUrlPath;
         
         this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
@@ -91,16 +115,13 @@ export default class ItemCreate extends LightningElement {
                 variant: 'success'
             })
         );
-        this.dispatchEvent(
-            new CustomEvent('issuecreated', { detail: event.detail.id })
-        );
-
     }
     handleUploadFinished(event) {
         // Get the list of uploaded files
         const uploadedFiles = event.detail.files;
         if(event.detail.files.length > 0){
             this.showUploadFileDialog = false;
+            this.fileUploadButtonClicked = false;
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Success',
@@ -113,6 +134,7 @@ export default class ItemCreate extends LightningElement {
 
     handelCancelFileUploadButton(event){
         this.showUploadFileDialog = false;
+        this.fileUploadButtonClicked = false;
     }
 
     handleError(event) {
