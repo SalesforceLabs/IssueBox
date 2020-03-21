@@ -3,7 +3,8 @@ import { LightningElement,wire, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
 
-
+//Get Obejct and field metadata to generate form
+//This is done to make sure object is not deleted and has a dependency on this lwc
 import ISSUE_OBJECT from '@salesforce/schema/Issue__c';
 import ActualResult_FIELD from '@salesforce/schema/Issue__c.Actual_Result__c';
 import Details_FIELD from '@salesforce/schema/Issue__c.Details__c';
@@ -50,14 +51,18 @@ export default class ItemCreate extends LightningElement {
     
     
     connectedCallback(){
+        //Parse URL for info like object name, record id, path (if applicable)
         this.updateRecordInfoFromUrl();
     };
 
+    //allowed file formats when uploading screenshots via lightning file upload
     get acceptedFormats() {
         return ['.png', '.jpg', '.jpeg'];
     }
 
+    //Process URL
     updateRecordInfoFromUrl(){
+        //If obejctApiName and/or recordId is in URL then use that for Reported_Object__c, Reported_Record__c and URL__c fields
         if(typeof(this.pageRef) !== 'undefined' && typeof(this.pageRef.attributes) !== 'undefined'){
             if(typeof(this.pageRef.attributes.objectApiName) !== 'undefined'){
                 this.objectApiName = this.pageRef.attributes.objectApiName;
@@ -68,6 +73,10 @@ export default class ItemCreate extends LightningElement {
         }
         this.pageUrlPath = window.location.pathname;
     }
+
+    //Submit form
+    //We overwrite it as we want to update Reported obejct, record and url fields to latest values
+    //These values can change because our app can be in console and tabs can change
     handleSubmit(event){
         event.preventDefault();       // stop the form from submitting
         const fields = event.detail.fields;
@@ -87,6 +96,8 @@ export default class ItemCreate extends LightningElement {
         //Do not use event.preventDefault()
         //We want default form submit handler to run after this'
         //All we needed here was to set the flag to show file dialog after record create
+
+        //This separate field is used so that file upload button is not displayed until record is created
         this.fileUploadButtonClicked = true;
     }
 
@@ -101,7 +112,9 @@ export default class ItemCreate extends LightningElement {
         }
     }
 
+    //use this if Issue record has been created successfully
     handleCreated(event) {
+        //If "Create Issue and Upload Screenshot" button has been clicked then we can use this flag to show file dialog after Issue has been crated
         if(this.fileUploadButtonClicked){
             this.showUploadFileDialog = true;
         }
@@ -120,8 +133,10 @@ export default class ItemCreate extends LightningElement {
         // Get the list of uploaded files
         const uploadedFiles = event.detail.files;
         if(event.detail.files.length > 0){
-            this.showUploadFileDialog = false;
-            this.fileUploadButtonClicked = false;
+            //Make sure to reset file dialog flags because user may create another issue but only click "Create Issue" button this one
+            //We don't want to show file dialog in that scenario
+            this.handelCancelFileUploadButton();
+
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Success',
@@ -131,13 +146,18 @@ export default class ItemCreate extends LightningElement {
             );
         }
     }
-
+    //Reset File upload flags if cancel file dialog button is clicked
+    //We don't want to show file dialog again until file upload button has been clicked again
     handelCancelFileUploadButton(event){
         this.showUploadFileDialog = false;
         this.fileUploadButtonClicked = false;
     }
 
     handleError(event) {
+        //Error happened so we will make sure file dialog doesn't open again 
+        //user can click that button again if they want to upload screenshot
+        this.handelCancelFileUploadButton();
+        
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Some error occured',
