@@ -6,7 +6,7 @@ public with sharing class IssueBox {
      * 
      * This method is cached because it's used in wire
      */
-    public static List<Issue__c> getIssueList(Integer pageNumber, Integer pageSize, Integer totalrecords) {
+    public static List<Issue__c> getIssueList(Integer pageNumber, Integer pageSize, Integer totalRecords) {
         List<Issue__c> issueList = new List<Issue__c>(); 
 
         try{

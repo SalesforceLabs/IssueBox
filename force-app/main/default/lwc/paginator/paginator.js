@@ -10,14 +10,14 @@ import { LightningElement, api, track } from 'lwc';
    firstpage = false;  
 
    // getter  
-   get showFirstButton() {  
-     if (this.currentpage === 1) {  
+   get disableFirstButton() {  
+     if (this.currentpage <= 1) {  
        return true;  
      }  
      return false;  
    }  
    // getter  
-   get showLastButton() {  
+   get disableLastButton() {  
      if (this.totalpages === this.currentpage) {  
        return true;  
      }  

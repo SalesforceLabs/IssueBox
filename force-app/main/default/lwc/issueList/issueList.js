@@ -13,7 +13,7 @@ const columns = [
     { label: 'Assigned To', fieldName: 'urlUid',  'initialWidth': 110, 'type': 'url', typeAttributes: { label: { fieldName: 'assignedto' } } },
     { label: 'Details', fieldName: 'details' },
 ];
-const PAGE_SIZE = 10; 
+const PAGE_SIZE = 3; 
 //Pagination sample from https://salesforcelightningwebcomponents.blogspot.com/2019/04/pagination-with-search-step-by-step.html
  export default class RecordList extends LightningElement {  
 
@@ -26,6 +26,8 @@ const PAGE_SIZE = 10;
     @track totalrecords;
     localCurrentPage = this.currentpage;
 
+    //Sending totalrecords as we want wire to refresh when this number changes
+    //Without it, it will not refreshbecause other variables may stay the same
     @wire(getIssueList, { pageNumber: '$currentpage', pageSize: '$pagesize', totalRecords: '$totalrecords' })
     wiredIssueList(value) {
         this.wiredIssueListPointer = value; 
@@ -54,12 +56,15 @@ const PAGE_SIZE = 10;
     wiredIssueCount(value) {
         this.wiredIssueCountPointer = value; 
         const { error, data } = value;
-        if (data) {
+
+        //Checking for =0 because it's possible that all records were deleted
+        //So if it's 0 then we need to refresh the list to remove all the records
+        if (typeof(error) == 'undefined' && data >= 0) {
             this.totalrecords = data;  
-            if (data !== 0 && !isNaN(data)) {  
+            if (!isNaN(data) && data >= 0) {  
                 this.totalpages = Math.ceil(data / this.pagesize);
             } else { 
-                this.totalpages = 1;  
+                this.totalpages = 0;  
                 this.totalrecords = 0;  
             }
         } else if (error) {
@@ -69,6 +74,12 @@ const PAGE_SIZE = 10;
     }
    
     getLatest(){
+        //Reset to page#1 on refresh
+        //Scenario: User maybe on a later page but records get deleted (or ownership changed for a particular user)
+        //In that scenario, it may show empty page because there are no records for that page; hence reset to first 1st page (to show at leaset some records)
+        
+        this.currentpage = 1;
+
         //Because this.totalrecords will change in this wire, the other wired method for records will automatically refresh
         refreshApex(this.wiredIssueCountPointer);
     }

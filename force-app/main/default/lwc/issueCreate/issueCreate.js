@@ -122,7 +122,13 @@ export default class ItemCreate extends LightningElement {
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Success',
-                message: 'New issue was successfully created',
+                message: '{0} was successfully created!',
+                "messageData": [
+                    {
+                        url: '/'+ event.detail.id,
+                        label: 'Issue:: ' + event.detail.fields.Name.value
+                    }
+                ],
                 variant: 'success'
             })
         );
@@ -140,6 +146,7 @@ export default class ItemCreate extends LightningElement {
                     title: 'Success',
                     message: 'File was successfully uploaded and attached to the issue',
                     variant: 'success'
+                    
                 })
             );
         }

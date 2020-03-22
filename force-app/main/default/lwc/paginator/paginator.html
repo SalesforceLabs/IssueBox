@@ -1,22 +1,22 @@
 <template>  
     <lightning-layout>  
       <lightning-layout-item>  
-        <lightning-button label="First" icon-name="utility:chevronleft" onclick={handleFirst} disabled={showFirstButton}></lightning-button>  
+        <lightning-button label="First" icon-name="utility:chevronleft" onclick={handleFirst} disabled={disableFirstButton}></lightning-button>  
       </lightning-layout-item>  
       <lightning-layout-item>  
-        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious}  disabled={showFirstButton}></lightning-button>  
+        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious}  disabled={disableFirstButton}></lightning-button>  
       </lightning-layout-item>  
       <lightning-layout-item flexibility="grow">
         <div class="slds-text-align_center">
-            Total records: <b>{totalrecords} </b> || 
-            Page <b>{currentpage}</b> of  <b> {totalpages}</b>
+            Total records: <b>{totalrecords} </b> 
+            <template if:true={totalrecords}>Page <b>{currentpage}</b> of  <b> {totalpages}</b></template>
         </div>
       </lightning-layout-item>  
       <lightning-layout-item>  
-        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext}  disabled={showLastButton}></lightning-button>  
+        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext}  disabled={disableLastButton}></lightning-button>  
       </lightning-layout-item>  
       <lightning-layout-item>  
-        <lightning-button label="Last" icon-name="utility:chevronright" icon-position="right" onclick={handleLast} disabled={showLastButton}></lightning-button>  
+        <lightning-button label="Last" icon-name="utility:chevronright" icon-position="right" onclick={handleLast} disabled={disableLastButton}></lightning-button>  
       </lightning-layout-item>  
     </lightning-layout>  
   </template> 
