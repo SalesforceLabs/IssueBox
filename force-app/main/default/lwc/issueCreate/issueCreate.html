@@ -42,15 +42,6 @@
                         <lightning-input-field field-name={actualResultField}></lightning-input-field>
                     </div>
                 </div>
-                <div class="slds-form-element__row slds-form__item">
-                    <div class="slds-col slds-size_1-of-3">
-                        <lightning-input-field field-name={reportedObjectField} value={objectApiName} disabled class="doNotReset"></lightning-input-field>
-                        <lightning-input-field field-name={reportedRecordField} value={recordId} disabled class="doNotReset"></lightning-input-field>
-                    </div>
-                    <div class="slds-col slds-size_2-of-3">
-                        <lightning-input-field field-name={urlField} value={pageUrlPath} class="doNotReset" disabled></lightning-input-field>
-                    </div>
-                </div>
                 <lightning-button-group>
                     <lightning-button type="submit" label="Create Issue" value="CreateIssue"></lightning-button>
                     <lightning-button type="submit" label="Create Issue and Upload Screenshot" value="CreateIssueUploadFile" onclick={handleSubmitAndUploadFileButton}></lightning-button>

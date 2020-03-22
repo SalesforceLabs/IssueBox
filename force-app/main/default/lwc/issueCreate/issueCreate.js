@@ -22,8 +22,8 @@ import URL_FIELD from '@salesforce/schema/Issue__c.URL__c';
  * Creates Account records.
  */
 export default class ItemCreate extends LightningElement {
-    @api objectApiName;
-    @api recordId;
+    @api objectApiName = null;
+    @api recordId = null;
 
     @track recordCreated = false;
     @track pageUrlPath = window.location.pathname;
@@ -44,31 +44,31 @@ export default class ItemCreate extends LightningElement {
     reportedObjectField = ReportedObject_FIELD;
     reportedRecordField = ReportedRecord_FIELD;
 
+    @track path;
+
     @wire(CurrentPageReference)
     pageRef;
-    
-    
-    connectedCallback(){
-        //Parse URL for info like object name, record id, path (if applicable)
-        this.updateRecordInfoFromUrl();
-    };
 
     //allowed file formats when uploading screenshots via lightning file upload
     get acceptedFormats() {
         return ['.png', '.jpg', '.jpeg'];
     }
-
     //Process URL
     updateRecordInfoFromUrl(){
         //If obejctApiName and/or recordId is in URL then use that for Reported_Object__c, Reported_Record__c and URL__c fields
         if(typeof(this.pageRef) !== 'undefined' && typeof(this.pageRef.attributes) !== 'undefined'){
             if(typeof(this.pageRef.attributes.objectApiName) !== 'undefined'){
                 this.objectApiName = this.pageRef.attributes.objectApiName;
+            }else{
+                this.objectApiName = null;
             }
             if(typeof(this.pageRef.attributes.recordId) !== 'undefined'){
                 this.recordId = this.pageRef.attributes.recordId;
+            }else{
+                this.recordId = null;
             }
         }
+        
         this.pageUrlPath = window.location.pathname;
     }
 
@@ -81,11 +81,11 @@ export default class ItemCreate extends LightningElement {
 
         //Update RecordId, ObjectAPIName based on URL in case URL has changed in console
         //There is no way to track URL changes as there is no API and component doesn't re-render in Utility Bar
-        //Update field data with new values before submitting form
+        //Update page data (object, record ID, URL) with latest info (if it was in console) and submit form
         this.updateRecordInfoFromUrl();
+
         fields.Reported_Object__c = this.objectApiName;
         fields.Reported_Record__c = this.recordId;
-        //Get Latest Path Name
         fields.URL__c = this.pageUrlPath;
         
         this.template.querySelector('lightning-record-edit-form').submit(fields);
