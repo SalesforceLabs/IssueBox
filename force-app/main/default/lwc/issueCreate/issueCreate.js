@@ -8,7 +8,6 @@ import { CurrentPageReference } from 'lightning/navigation';
 import ISSUE_OBJECT from '@salesforce/schema/Issue__c';
 import ActualResult_FIELD from '@salesforce/schema/Issue__c.Actual_Result__c';
 import Details_FIELD from '@salesforce/schema/Issue__c.Details__c';
-import EmailNotification_FIELD from '@salesforce/schema/Issue__c.Email_Notification__c';
 import ExpectedResult_FIELD from '@salesforce/schema/Issue__c.Expected_Result__c';
 import Priority_FIELD from '@salesforce/schema/Issue__c.Priority__c';
 import ReportedObject_FIELD from '@salesforce/schema/Issue__c.Reported_Object__c';
@@ -36,7 +35,6 @@ export default class ItemCreate extends LightningElement {
     issueObject = ISSUE_OBJECT;
     actualResultField = ActualResult_FIELD;
     detailsField = Details_FIELD;
-    emailNotificationField = EmailNotification_FIELD;
     expectedResultField = ExpectedResult_FIELD;
     priorityField = Priority_FIELD;
     reproStepsField = ReproSteps_FIELD;

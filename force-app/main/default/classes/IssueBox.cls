@@ -12,7 +12,7 @@ public with sharing class IssueBox {
         try{
             Integer offset = (pageSize * (pageNumber - 1));
             issueList = [SELECT 
-                    ID, Name, Details__c, Email_Notification__c, Expected_Result__c, Priority__c, Reported_Object__c,
+                    ID, Name, Details__c, Expected_Result__c, Priority__c, Reported_Object__c,
                     Reported_Record__c, Repro_Steps__c, Status__c, Type__c, URL__c, Assigned_To__c, Assigned_To__r.Name
                     FROM Issue__c WITH SECURITY_ENFORCED
                     ORDER BY Name DESC
