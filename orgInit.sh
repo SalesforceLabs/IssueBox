@@ -4,6 +4,8 @@ sfdx force:source:push
 
 sfdx force:user:permset:assign -n  IssueBox_Admin
 
+sfdx force:apex:execute -f config/create-demo-data.apex
+
 sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json
 
 sfdx force:org:open
