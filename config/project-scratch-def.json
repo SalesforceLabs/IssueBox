@@ -1,6 +1,6 @@
 {
   "orgName": "IssueBox",
-  "edition": "Developer",
+  "edition": "Partner Developer",
   "features": ["AuthorApex", "DebugApex", "ProcessBuilder","AnalyticsAdminPerms"],
   "settings": {
     "lightningExperienceSettings": {
