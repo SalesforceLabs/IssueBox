@@ -13,7 +13,7 @@ const columns = [
     { label: 'Assigned To', fieldName: 'urlUid',  'initialWidth': 110, 'type': 'url', typeAttributes: { label: { fieldName: 'assignedto' } } },
     { label: 'Details', fieldName: 'details' },
 ];
-const PAGE_SIZE = 3; 
+const PAGE_SIZE = 10; 
 //Pagination sample from https://salesforcelightningwebcomponents.blogspot.com/2019/04/pagination-with-search-step-by-step.html
  export default class RecordList extends LightningElement {  
 
