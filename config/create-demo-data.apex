@@ -19,3 +19,12 @@ u.ProfileID = p.Id;
 u.LanguageLocaleKey = 'en_US';
 u.EmailEncodingKey = 'UTF-8';
 insert u;
+
+//Assign IssueBox_Usre perm set to newly created user (it's not admin)
+PermissionSet ps = [select id, name from PermissionSet where name='IssueBox_User'];
+    // Given mocked Permission Set assigned to user for test
+    PermissionSetAssignment psa = new PermissionSetAssignment(
+        AssigneeId = u.Id,
+        PermissionSetId = ps.Id
+    );
+    insert psa;
