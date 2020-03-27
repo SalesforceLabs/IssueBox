@@ -1,4 +1,4 @@
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s
+sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s -v LabsDevHub
 
 sfdx force:source:push
 
@@ -16,3 +16,5 @@ sfdx force:org:open
 #    "SELECT Details__c,Actual_Result__c,Email_Notification__c,Expected_Result__c,Priority__c,Reported_Object__c,Reported_Record__c, Repro_Steps__c,Status__c,Type__c from Issue__c " \
 #     --prefix issuebox --outputdir data --plan
 
+#Create package version
+#sfdx force:package:create --name "Issue Box" --path force-app  --packagetype Managed -v LabsDevHub
