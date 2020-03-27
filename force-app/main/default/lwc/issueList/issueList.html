@@ -5,7 +5,7 @@
               onlast={handleLast} currentpage={currentpage} totalrecords={totalrecords} pagesize={pagesize} totalpages={totalpages}>   
             </c-paginator>  
           </div>  
-        <lightning-button label="Get Latest" onclick={getLatest}></lightning-button> 
+        <lightning-button label="Latest Issues" onclick={getLatest}></lightning-button> 
         
         
         <template if:true={issues.length}>
