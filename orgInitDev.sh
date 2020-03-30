@@ -1,5 +1,6 @@
 #For development and creating package
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s -v LabsDevHub
+sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s 
+#-v LabsDevHub
 
 sfdx force:source:push -f -u IssueBoxScratchOrg
 
@@ -17,9 +18,13 @@ sfdx force:org:open -u IssueBoxScratchOrg
 
 #Create package - ONE TIME - in Dev Hub
 #sfdx force:package:create -n "Issue Box" -r force-app  -t Managed -v LabsDevHub
+#sfdx force:package:create -n "Issue Box" -r force-app  -t Managed
 
 #Create package - Version - in Dev Hub
-#sfdx force:package:version:create -p "Issue Box" -k test1234 --wait 10 -v LabsDevHub
+#sfdx force:package:version:create -p "Issue Box" -k test1234 --wait 10 -v LabsDevHub -c -f config/project-scratch-def.json
+#sfdx force:package:version:create -p "Issue Box" -k test1234 --wait 10 -c -f config/project-scratch-def.json
+#sfdx force:package:version:create:list --createdlastdays 0 -v LabsDevHub
+
 
 #INSTALL - in pkg test scratch org
 #sfdx force:package:install -p "Issue Box@0.1.0-1" -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10

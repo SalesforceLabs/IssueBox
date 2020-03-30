@@ -33,7 +33,7 @@ public with sharing class IssueBoxTest {
         insert psa;
     }
     
-    @isTest static void IssueBox_getIssueCount_Test_runAs_negative(){
+    @isTest static void issueBox_getIssueCount_Test_runAs_negative(){
 		User u = setupUser();
         //No permission set assignment as we want to raise exception
         //assignPermissionSet('IssueBox_User', u.Id);
@@ -52,7 +52,7 @@ public with sharing class IssueBoxTest {
     
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test_runAs_negative() {
+    private static void issueBox_getIssueList_Test_runAs_negative() {
         User u = setupUser();
         //No permission set assignment as we want to raise exception
         //assignPermissionSet('IssueBox_User', u.Id);
@@ -72,7 +72,7 @@ public with sharing class IssueBoxTest {
     
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test_runAs() {
+    private static void issueBox_getIssueList_Test_runAs() {
         User u = setupUser();
         assignPermissionSet('IssueBox_User', u.Id);
 
@@ -82,7 +82,7 @@ public with sharing class IssueBoxTest {
     }
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test() {
+    private static void issueBox_getIssueList_Test() {
         createTestData(10);
         List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
         
@@ -101,7 +101,7 @@ public with sharing class IssueBoxTest {
     }
     
     
-    @isTest static void IssueBox_getIssueCount_Test_runAs(){
+    @isTest static void issueBox_getIssueCount_Test_runAs(){
 		User u = setupUser();
         assignPermissionSet('IssueBox_User', u.Id);
 
@@ -112,7 +112,7 @@ public with sharing class IssueBoxTest {
     
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueCount_Test_positive() {
+    private static void issueBox_getIssueCount_Test_positive() {
         createTestData(10);
         System.assertEquals(10, IssueBox.getIssueCount());
         
