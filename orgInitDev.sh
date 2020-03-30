@@ -1,16 +1,15 @@
-#For Package Testing
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrgPkg
-#sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrgPkg -s -v LabsDevHub
+#For development and creating package
+sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s -v LabsDevHub
 
-sfdx force:package:install -p "Issue Box@0.1.0-3" -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10
+sfdx force:source:push -f -u IssueBoxScratchOrg
 
-sfdx force:user:permset:assign -n  issuebox__IssueBox_Admin -u IssueBoxScratchOrgPkg
+sfdx force:user:permset:assign -n  issuebox__IssueBox_Admin -u IssueBoxScratchOrg
 
-sfdx force:apex:execute -f config/create-demo-data.apex -u IssueBoxScratchOrgPkg
+sfdx force:apex:execute -f config/create-demo-data.apex -u IssueBoxScratchOrg
 
-sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json -u IssueBoxScratchOrgPkg
+sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json -u IssueBoxScratchOrg
 
-sfdx force:org:open -u IssueBoxScratchOrgPkg
+sfdx force:org:open -u IssueBoxScratchOrg
 
 #sfdx force:lightning:lwc:start 
 
