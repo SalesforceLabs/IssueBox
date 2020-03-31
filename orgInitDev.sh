@@ -28,3 +28,9 @@ sfdx force:org:open -u IssueBoxScratchOrg
 
 #INSTALL - in pkg test scratch org
 #sfdx force:package:install -p "Issue Box@0.1.0-1" -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10
+
+#Deploy to Dev Org: Use -c to check only first
+#If in MDAPI format
+#sfdx force:mdapi:deploy -d src -u IssueBoxDevOrg -w 100 
+#If in SFDX format, comma separated list
+#sfdx force:source:deploy -u IssueBoxDevOrg -p "force-app/main/default/"

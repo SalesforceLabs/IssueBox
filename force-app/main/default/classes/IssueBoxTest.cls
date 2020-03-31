@@ -45,7 +45,9 @@ public with sharing class IssueBoxTest {
                 //Because user doens't have permission set assigned, user cannot even create records
                 System.assertEquals(0, [select count() from Issue__c]);
             } 
+
             //This should fail becasue we didn't assign permission set
+            //Need to run this outside of try so we can trigger exception in IssueBox and also for code coverage
             System.assertEquals(0, IssueBox.getIssueCount());
         }
     }
@@ -59,12 +61,14 @@ public with sharing class IssueBoxTest {
 
         System.runAs(u) {
             try{
-            	createTestData(10);
+                createTestData(10);
             }Catch(Exception e){
                 //Because user doens't have permission set assigned, user cannot even create records
                 System.assertEquals(0, [select count() from Issue__c]);
             }
-        	List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            
+            List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            //Need to run this outside of try so we can trigger exception in IssueBox and also for code coverage
             //Because no permission set is assigned, this should fail
             System.assertEquals(0, issueList.size());
         }
