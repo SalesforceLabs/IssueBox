@@ -84,9 +84,10 @@ export default class ItemCreate extends LightningElement {
         //Update page data (object, record ID, URL) with latest info (if it was in console) and submit form
         this.updateRecordInfoFromUrl();
 
-        fields.Reported_Object__c = this.objectApiName;
-        fields.Reported_Record__c = this.recordId;
-        fields.URL__c = this.pageUrlPath;
+        //Use namespace in fields
+        fields.issuebox__Reported_Object__c = this.objectApiName;
+        fields.issuebox__Reported_Record__c = this.recordId;
+        fields.issuebox__URL__c = this.pageUrlPath;
         
         this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
