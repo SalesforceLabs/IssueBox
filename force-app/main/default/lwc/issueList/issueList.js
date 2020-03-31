@@ -35,14 +35,14 @@ const PAGE_SIZE = 10;
         if (data) {
             this.issues = [];//Remove old rows and add new rows
             for(var i = 0; i < data.length; i++){
-                let urlUid = (typeof(data[i].Assigned_To__c) != 'undefined')?'/'+data[i].Assigned_To__c:'';
-                let assignedToName = (typeof(data[i].Assigned_To__r) != 'undefined')?data[i].Assigned_To__r.Name:'';
+                let urlUid = (typeof(data[i].issuebox__Assigned_To__c) != 'undefined')?'/'+data[i].issuebox__Assigned_To__c:'';
+                let assignedToName = (typeof(data[i].issuebox__Assigned_To__r) != 'undefined')?data[i].issuebox__Assigned_To__r.Name:'';
                 this.issues.push({
                     'id': data[i].Id, 'name': data[i].Name, 
                     'urlId': '/'+data[i].Id, 'urlUid': urlUid,
-                    'status': data[i].Status__c, 'type': data[i].Type__c,
-                    'priority': data[i].Priority__c, 'assignedto': assignedToName,
-                    'details': data[i].Details__c,
+                    'status': data[i].issuebox__Status__c, 'type': data[i].issuebox__Type__c,
+                    'priority': data[i].issuebox__Priority__c, 'assignedto': assignedToName,
+                    'details': data[i].issuebox__Details__c,
                 });
             }
             /**/

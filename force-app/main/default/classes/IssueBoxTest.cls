@@ -9,8 +9,6 @@ public with sharing class IssueBoxTest {
             issueList.add(issue);
         }
         insert issueList;
-        
-        
     }
     private static User setupUser(){
         // Create a unique UserName
@@ -34,16 +32,43 @@ public with sharing class IssueBoxTest {
         );
         insert psa;
     }
+    
+    @isTest static void issueBox_getIssueCount_Test_runAs_negative(){
+		User u = setupUser();
+        //No permission set assignment as we want to raise exception
+        //assignPermissionSet('IssueBox_User', u.Id);
+
+        System.runAs(u) {
+            try{
+            	createTestData(10);
+            }Catch(Exception e){
+                //Because user doens't have permission set assigned, user cannot even create records
+                System.assertEquals(0, [select count() from Issue__c]);
+            } 
+
+            //This should fail becasue we didn't assign permission set
+            //Need to run this outside of try so we can trigger exception in IssueBox and also for code coverage
+            System.assertEquals(0, IssueBox.getIssueCount());
+        }
+    }
+    
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test_runAs_negative() {
+    private static void issueBox_getIssueList_Test_runAs_negative() {
         User u = setupUser();
         //No permission set assignment as we want to raise exception
         //assignPermissionSet('IssueBox_User', u.Id);
 
         System.runAs(u) {
-            createTestData(10);
-        	List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            try{
+                createTestData(10);
+            }Catch(Exception e){
+                //Because user doens't have permission set assigned, user cannot even create records
+                System.assertEquals(0, [select count() from Issue__c]);
+            }
+            
+            List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            //Need to run this outside of try so we can trigger exception in IssueBox and also for code coverage
             //Because no permission set is assigned, this should fail
             System.assertEquals(0, issueList.size());
         }
@@ -51,7 +76,7 @@ public with sharing class IssueBoxTest {
     
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test_runAs() {
+    private static void issueBox_getIssueList_Test_runAs() {
         User u = setupUser();
         assignPermissionSet('IssueBox_User', u.Id);
 
@@ -61,7 +86,7 @@ public with sharing class IssueBoxTest {
     }
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueList_Test() {
+    private static void issueBox_getIssueList_Test() {
         createTestData(10);
         List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
         
@@ -79,19 +104,8 @@ public with sharing class IssueBoxTest {
         System.assertEquals('Issue #4', issueList[0].Details__c);
     }
     
-    @isTest static void IssueBox_getIssueCount_Test_runAs_negative(){
-		User u = setupUser();
-        //No permission set assignment as we want to raise exception
-        //assignPermissionSet('IssueBox_User', u.Id);
-
-        System.runAs(u) {
-            createTestData(10); 
-            //This should fail becasue we didn't assign permission set
-            System.assertEquals(0, IssueBox.getIssueCount());
-        }
-    }
     
-    @isTest static void IssueBox_getIssueCount_Test_runAs(){
+    @isTest static void issueBox_getIssueCount_Test_runAs(){
 		User u = setupUser();
         assignPermissionSet('IssueBox_User', u.Id);
 
@@ -102,7 +116,7 @@ public with sharing class IssueBoxTest {
     
     @isTest
     //Test to make sure issue Count is returned properly
-    private static void IssueBox_getIssueCount_Test_positive() {
+    private static void issueBox_getIssueCount_Test_positive() {
         createTestData(10);
         System.assertEquals(10, IssueBox.getIssueCount());
         

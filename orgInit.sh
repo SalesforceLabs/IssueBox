@@ -1,18 +1,17 @@
-sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s
+#For Package Testing
+sfdx force:org:create -f config/project-scratch-def.json  -d 3 -a IssueBoxScratchOrgPkg
+#sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrgPkg -s -v LabsDevHub
 
-sfdx force:source:push
+#Test 2GP Package
+#sfdx force:package:install -p  -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10
 
-sfdx force:user:permset:assign -n  IssueBox_Admin
+#Test 1GP Package
+sfdx force:package:install -p 04t3h0000010faN -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10
 
-sfdx force:apex:execute -f config/create-demo-data.apex
+sfdx force:user:permset:assign -n  issuebox__IssueBox_Admin -u IssueBoxScratchOrgPkg
 
-sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json
+sfdx force:apex:execute -f config/create-demo-data.apex -u IssueBoxScratchOrgPkg
 
-sfdx force:org:open
+sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json -u IssueBoxScratchOrgPkg
 
-#sfdx force:lightning:lwc:start 
-
-#sfdx force:data:tree:export --query \
-#    "SELECT Details__c,Actual_Result__c,Email_Notification__c,Expected_Result__c,Priority__c,Reported_Object__c,Reported_Record__c, Repro_Steps__c,Status__c,Type__c from Issue__c " \
-#     --prefix issuebox --outputdir data --plan
-
+sfdx force:org:open -u IssueBoxScratchOrgPkg
