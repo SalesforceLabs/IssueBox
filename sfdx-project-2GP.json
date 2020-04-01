@@ -1,0 +1,19 @@
+{
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "Issue Box",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT"
+        }
+    ],
+    "namespace": "issuebox",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "48.0",
+    "packageAliases": {
+        "Issue Box": "0Ho1C0000008OKLSA2",
+        "Issue Box@0.1.0-1": "04t3h000001mr1VAAQ",
+        "Issue Box@0.1.0-3": "04t3h000001n09uAAA"
+    }
+}
