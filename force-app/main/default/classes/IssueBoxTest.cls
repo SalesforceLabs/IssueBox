@@ -19,7 +19,6 @@ public with sharing class IssueBoxTest {
                           EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
                           LocaleSidKey='en_US', ProfileId = p.Id,
                           TimeZoneSidKey='America/Los_Angeles', UserName=uniqueUserName);
-        System.debug(u);
         insert u;
         return u;
     }
