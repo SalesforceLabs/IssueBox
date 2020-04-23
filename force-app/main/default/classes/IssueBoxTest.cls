@@ -10,16 +10,15 @@ public with sharing class IssueBoxTest {
         }
         insert issueList;
     }
-    private static User setupUser(){
+    private static User setupUser(String profileName){
         // Create a unique UserName
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile p = [SELECT Id FROM Profile WHERE Name=:profileName];
         User u = new User(Alias = 'standt', Email='standarduser@issuebox.app',
                           EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
                           LocaleSidKey='en_US', ProfileId = p.Id,
                           TimeZoneSidKey='America/Los_Angeles', UserName=uniqueUserName);
-        
         insert u;
         return u;
     }
@@ -33,8 +32,9 @@ public with sharing class IssueBoxTest {
         insert psa;
     }
     
-    @isTest static void issueBox_getIssueCount_Test_runAs_negative(){
-		User u = setupUser();
+    @isTest 
+    static void issueBox_getIssueCount_Test_runAs_negative(){
+        User u = setupUser('Standard User');
         //No permission set assignment as we want to raise exception
         //assignPermissionSet('IssueBox_User', u.Id);
 
@@ -55,7 +55,7 @@ public with sharing class IssueBoxTest {
     @isTest
     //Test to make sure issue Count is returned properly
     private static void issueBox_getIssueList_Test_runAs_negative() {
-        User u = setupUser();
+        User u = setupUser('Standard User');
         //No permission set assignment as we want to raise exception
         //assignPermissionSet('IssueBox_User', u.Id);
 
@@ -77,51 +77,77 @@ public with sharing class IssueBoxTest {
     @isTest
     //Test to make sure issue Count is returned properly
     private static void issueBox_getIssueList_Test_runAs() {
-        User u = setupUser();
+        User u = setupUser('Standard User');
         assignPermissionSet('IssueBox_User', u.Id);
 
         System.runAs(u) {
-            IssueBox_getIssueList_Test();
+            createTestData(10);
+            List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            
+            System.assertEquals(10, issueList.size());
+            //Issues are sorted in descending order based on Issue Number (auto number) so last issue inserted will show up first
+            System.assertEquals('Issue #9', issueList[0].Details__c);
+            //Checking trigger coverage, Protocol from URL is removed in trigger and replaced with "/"
+            System.assertEquals('/www.test.com', issueList[0].URL__c);
+            
+            
+            createTestData(5);
+            //Even though we requested 10 issues, it's second page. Becasue there are total 15 records, it will only return 5
+            issueList = IssueBox.getIssueList(2, 10, 20);
+            System.assertEquals(5, issueList.size());
+            System.assertEquals('Issue #4', issueList[0].Details__c);
         }
     }
     @isTest
     //Test to make sure issue Count is returned properly
     private static void issueBox_getIssueList_Test() {
-        createTestData(10);
-        List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
-        
-        System.assertEquals(10, issueList.size());
-        //Issues are sorted in descending order based on Issue Number (auto number) so last issue inserted will show up first
-        System.assertEquals('Issue #9', issueList[0].Details__c);
-        //Checking trigger coverage, Protocol from URL is removed in trigger and replaced with "/"
-        System.assertEquals('/www.test.com', issueList[0].URL__c);
-        
-        
-        createTestData(5);
-        //Even though we requested 10 issues, it's second page. Becasue there are total 15 records, it will only return 5
-		issueList = IssueBox.getIssueList(2, 10, 20);
-        System.assertEquals(5, issueList.size());
-        System.assertEquals('Issue #4', issueList[0].Details__c);
+        User u = setupUser('System Administrator');
+        assignPermissionSet('IssueBox_Admin', u.Id);
+        System.runAs(u){
+            createTestData(10);
+            List<Issue__c> issueList = IssueBox.getIssueList(1, 10, 10);
+            
+            System.assertEquals(10, issueList.size());
+            //Issues are sorted in descending order based on Issue Number (auto number) so last issue inserted will show up first
+            System.assertEquals('Issue #9', issueList[0].Details__c);
+            //Checking trigger coverage, Protocol from URL is removed in trigger and replaced with "/"
+            System.assertEquals('/www.test.com', issueList[0].URL__c);
+            
+            
+            createTestData(5);
+            //Even though we requested 10 issues, it's second page. Becasue there are total 15 records, it will only return 5
+            issueList = IssueBox.getIssueList(2, 10, 20);
+            System.assertEquals(5, issueList.size());
+            System.assertEquals('Issue #4', issueList[0].Details__c);
+        }
     }
     
     
     @isTest static void issueBox_getIssueCount_Test_runAs(){
-		User u = setupUser();
+        User u = setupUser('Standard User');
         assignPermissionSet('IssueBox_User', u.Id);
 
         System.runAs(u) {
-            IssueBox_getIssueCount_Test_positive();
+            createTestData(10);
+            System.assertEquals(10, IssueBox.getIssueCount());
+            
+            createTestData(10);
+            System.assertEquals(20, IssueBox.getIssueCount());
         }
     }
     
     @isTest
     //Test to make sure issue Count is returned properly
     private static void issueBox_getIssueCount_Test_positive() {
-        createTestData(10);
-        System.assertEquals(10, IssueBox.getIssueCount());
-        
-        createTestData(10);
-        System.assertEquals(20, IssueBox.getIssueCount());
+        User u = setupUser('System Administrator');
+        assignPermissionSet('IssueBox_Admin', u.Id);
+        System.runAs(u){
+            createTestData(10);
+            System.assertEquals(10, IssueBox.getIssueCount());
+            
+            createTestData(10);
+            System.assertEquals(20, IssueBox.getIssueCount());
+        }
     }
 /**/
 }

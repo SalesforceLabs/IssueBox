@@ -4,7 +4,7 @@ sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScrat
 
 sfdx force:source:push -f -u IssueBoxScratchOrg
 
-sfdx force:user:permset:assign -n  issuebox__IssueBox_Admin -u IssueBoxScratchOrg
+sfdx force:user:permset:assign -n  IssueBox_Admin -u IssueBoxScratchOrg
 
 sfdx force:apex:execute -f config/create-demo-data.apex -u IssueBoxScratchOrg
 
