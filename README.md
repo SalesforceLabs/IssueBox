@@ -23,6 +23,8 @@ You can also use this repository to pull source code. However, you will not be a
 - Users can also choose to upload a screenshot of the page or error while creating the issue; these will be stored as Files on the Issue record once created
   - Issue is always created even if a user cancels screenshot uploaded
   - This is because we need to associate file to an existing record so we create the issue before displaying file upload form
+- User, logging the issue, will be @mentioned to tell them where their issue was created
+- However, customers can create their own process builder to @mention, say, a group of admins who will be responisble for these issues. Those admins will be notified when that issue is created. Customers can use packaged Process Builder to clone and make changes as needed
   
 ### Component: Issue List
 - This component can be used to embed in utility bar so users have a quick and easy way to check status of the issues they have logged
