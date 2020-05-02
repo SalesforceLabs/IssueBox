@@ -6,7 +6,7 @@ sfdx force:org:create -f config/project-scratch-def.json  -d 3 -a IssueBoxScratc
 #sfdx force:package:install -p  -u IssueBoxScratchOrgPkg -k test1234 -w 10 -b 10
 
 #Test 1GP Package
-sfdx force:package:install -p 04t3h0000010kW5  -w 10
+sfdx force:package:install -p 04t3h0000010mmY  -w 10
 
 sfdx force:user:permset:assign -n  issuebox__IssueBox_Admin
 
