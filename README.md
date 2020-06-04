@@ -1,7 +1,7 @@
 # Issue Box
 
 ## Installation
-Install IssueBox from AppExchange. 
+Install IssueBox from AppExchange: https://appexchange.salesforce.com/appxListingDetail?listingId=a0N3A00000FoU7IUAV
 
 You can also use this repository to pull source code. However, you will not be able to take advantage of package upgrade process.
 
