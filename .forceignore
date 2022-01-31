@@ -10,5 +10,5 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
-**/appMenus/AppSwitcher.appMenu
+**/appMenus/AppSwitcher**
 **/profiles/**

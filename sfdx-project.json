@@ -1,6 +1,13 @@
 {
-    "packageDirectories": [ ],
+    "packageDirectories": [
+      {
+        "path": "force-app",
+        "default": true
+      }
+    ],
+    "name": "IssueBox",
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "48.0"
-}
+    "sourceApiVersion": "53.0"
+  }
+  

@@ -13,6 +13,7 @@
         <locationY>200</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
             <value>
@@ -44,6 +45,7 @@ Status for Issue &quot;{!myVariable_current.Details__c}&quot; reported by you ha
         <locationY>200</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
             <value>
@@ -62,6 +64,7 @@ Thanks for reporting this issue. We will notify you when someone starts working 
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <decisions>
         <name>isChangedDecision2_myRule_1_Status_c</name>
         <label>isChangedDecision2_myRule_1_Status_c</label>
@@ -216,7 +219,7 @@ Thanks for reporting this issue. We will notify you when someone starts working 
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>isChangedDecision2_myRule_1_Status_c</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

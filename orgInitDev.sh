@@ -2,15 +2,16 @@
 sfdx force:org:create -f config/project-scratch-def.json  -d 30 -a IssueBoxScratchOrg -s 
 #-v LabsDevHub
 
-sfdx force:source:push -f -u IssueBoxScratchOrg
+sfdx force:source:push
 
-sfdx force:user:permset:assign -n  IssueBox_Admin -u IssueBoxScratchOrg
+sfdx force:user:permset:assign -n  IssueBox_Admin
 
-sfdx force:apex:execute -f config/create-demo-data.apex -u IssueBoxScratchOrg
+sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json 
 
-sfdx force:data:tree:import --plan data/issuebox-Issue__c-plan.json -u IssueBoxScratchOrg
+sfdx force:apex:execute -f config/create-demo-data.apex 
 
-sfdx force:org:open -u IssueBoxScratchOrg
+
+sfdx force:org:open
 
 #sfdx force:lightning:lwc:start 
 

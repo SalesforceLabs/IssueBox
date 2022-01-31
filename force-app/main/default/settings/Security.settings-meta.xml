@@ -10,7 +10,6 @@
     <networkAccess/>
     <passwordPolicies>
         <complexity>AlphaNumeric</complexity>
-        <enableSetPasswordInApi>true</enableSetPasswordInApi>
         <expiration>NinetyDays</expiration>
         <historyRestriction>3</historyRestriction>
         <lockoutInterval>FifteenMinutes</lockoutInterval>
@@ -52,7 +51,6 @@
         <lockSessionsToDomain>true</lockSessionsToDomain>
         <lockSessionsToIp>false</lockSessionsToIp>
         <lockerServiceCSP>true</lockerServiceCSP>
-        <lockerServiceFrozenRealm>false</lockerServiceFrozenRealm>
         <redirectionWarning>true</redirectionWarning>
         <referrerPolicy>true</referrerPolicy>
         <requireHttpOnly>false</requireHttpOnly>
