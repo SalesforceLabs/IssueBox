@@ -1,17 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <description>Send Bell Notification</description>
+        <name>IssueBox_Record_Create_Bell_Notification</name>
+        <label>IssueBox - Record Create - Bell Notification</label>
+        <locationX>176</locationX>
+        <locationY>695</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Get_Custom_Notification_record_ID.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>IssuseBoxRecordUpdateNotificationBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>IssueBox record status updated!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>RecipientIDs</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>IssueBox_Status_Change_Notification</name>
         <label>IssueBox - Status Change Notification</label>
         <locationX>176</locationX>
         <locationY>335</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <connector>
+            <targetReference>Add_RecordOwnerIDs_to_RecipientIDs</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
             <value>
-                <stringValue>@[{!$Record.OwnerId}]  Status for Issue &quot;{!$Record.Details__c}&quot; reported by you has been changed to {!$Record.Status__c}</stringValue>
+                <elementReference>IssuseBoxRecordUpdateMessageBody</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -23,6 +66,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <description>This will be used in custom notification</description>
+        <name>Add_RecordOwnerIDs_to_RecipientIDs</name>
+        <label>Add RecordOwnerIDs to RecipientIDs</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Custom_Notification_record_ID</targetReference>
+        </connector>
+    </assignments>
+    <formulas>
+        <description>Body to be used for message on Chatter field</description>
+        <name>IssuseBoxRecordUpdateMessageBody</name>
+        <dataType>String</dataType>
+        <expression>&apos;@[&apos;+{!$Record.OwnerId} + &apos;]  Status for Issue &quot;&apos;+{!$Record.Details__c}+&apos;&quot; reported by you has been updated to &quot;&apos; + TEXT({!$Record.Status__c}) + &apos;&quot;&apos;</expression>
+    </formulas>
+    <formulas>
+        <description>Body to be used for message on Bell notification</description>
+        <name>IssuseBoxRecordUpdateNotificationBody</name>
+        <dataType>String</dataType>
+        <expression>&apos;@&apos;+{!$Record.Owner:User.FirstName} + &apos; &apos; + {!$Record.Owner:User.LastName} + &apos; Status for Issue &quot;&apos;+{!$Record.Details__c}+&apos;&quot; reported by you has been updated to &quot;&apos; + TEXT({!$Record.Status__c}) + &apos;&quot;&apos;</expression>
+    </formulas>
     <interviewLabel>IssueBox - {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>IssueBox -Record Updated</label>
@@ -45,6 +117,27 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Custom_Notification_record_ID</name>
+        <label>Get Custom Notification record ID</label>
+        <locationX>176</locationX>
+        <locationY>575</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IssueBox_Record_Create_Bell_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IssueBox_Record_Update_Notification</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -64,4 +157,12 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <description>Recipient IDs to be used in Custom Notification</description>
+        <name>RecipientIDs</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

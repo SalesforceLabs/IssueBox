@@ -32,6 +32,6 @@ sfdx force:org:open
 
 #Deploy to Dev Org: Use -c to check only first
 #If in MDAPI format
-#sfdx force:mdapi:deploy -d src -u IssueBoxDevOrg -w 100 
+#sfdx force:source:deploy -p force-app/main/default -u IssueBoxDevOrg -w 100 
 #If in SFDX format, comma separated list
 #sfdx force:source:deploy -u IssueBoxDevOrg -p "force-app/main/default/"
