@@ -1,0 +1,49 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Issue__c",
+                "referenceId": "Issue__cRef1"
+            },
+            "Details__c": "Issue 1",
+            "Actual_Result__c": "AR",
+            "Expected_Result__c": "ER",
+            "Priority__c": "Low",
+            "Reported_Object__c": "",
+            "Reported_Record__c": "",
+            "Status__c": "New",
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
+        },
+        {
+            "attributes": {
+                "type": "Issue__c",
+                "referenceId": "Issue__cRef2"
+            },
+            "Details__c": "Issue 2",
+            "Actual_Result__c": "AR",
+            "Expected_Result__c": "ER",
+            "Priority__c": "Low",
+            "Reported_Object__c": "",
+            "Reported_Record__c": "",
+            "Status__c": "New",
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
+        },
+        {
+            "attributes": {
+                "type": "Issue__c",
+                "referenceId": "Issue__cRef3"
+            },
+            "Details__c": "Issue 3",
+            "Actual_Result__c": "AR",
+            "Expected_Result__c": "ER",
+            "Priority__c": "Low",
+            "Reported_Object__c": "Account",
+            "Reported_Record__c": "001",
+            "Status__c": "New",
+            "Type__c": "Bug",
+            "Repro_Steps__c": "Repro Steps"
+        }
+    ]
+}
